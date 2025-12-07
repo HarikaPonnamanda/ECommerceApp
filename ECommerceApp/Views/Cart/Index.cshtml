@@ -1,0 +1,47 @@
+﻿@model List<ECommerceApp.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h2>Your Cart</h2>
+
+@if (!Model.Any())
+{
+    <h3 class="text-danger">Cart is empty</h3>
+    <a href="/Products" class="btn btn-primary">Continue Shopping</a>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.ImageUrl" alt="Product Image" width="100" />
+                    </td>
+                    <td>@item.ProductName</td>
+                    <td>₹@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>₹@(item.Price* item.Quantity)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3 class="text-success">
+        Total: ₹@Model.Sum(i => i.Price * i.Quantity)
+    </h3>
+
+    <a href="/Products" class="btn btn-primary">Continue Shopping</a>
+}
